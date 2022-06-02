@@ -1,4 +1,4 @@
-CalculatorApp
+Calculator App
 This is just a Calculator that is similar to what the standard Windows Calculator.
 
 It doesn't work as an actual app yet, but it does work if you have it work on an IDE.

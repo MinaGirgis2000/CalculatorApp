@@ -1,0 +1,314 @@
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.lang.Math;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Calc_App implements ActionListener {
+
+    JFrame frame;
+    JButton[] num = new JButton[10];
+    JButton[] function = new JButton[14];
+    JButton add, sub, multi, div, equ, neg, dec, del, clr, perc, sqr, rt, half, clral;
+    JPanel panel;
+    JPanel background;
+    JTextField equation;
+    JTextField input;
+
+    char ope;
+    double num1, num2, ans;
+
+    Border border = BorderFactory.createLineBorder(Color.DARK_GRAY);
+    Border be = BorderFactory.createLineBorder(Color.BLACK);
+    Font myfont = new Font(Font.SERIF, Font.BOLD, 25);
+    Font myfonte = new Font(Font.SERIF, Font.BOLD, 20);
+
+    Calc_App() {
+
+        frame = new JFrame("Calculator");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(370, 500);
+        frame.setLayout(new BorderLayout());
+        frame.setBackground(Color.DARK_GRAY);
+
+        background = new JPanel();
+        background.setBounds(0, 0, 370, 500);
+        background.setBackground(Color.BLACK);
+
+        input = new JTextField("0");
+        input.setBounds(10, 33, 335, 60);
+        input.setFont(myfont);
+        input.setEditable(false);
+        input.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        input.setBackground(Color.BLACK);
+        input.setForeground(Color.WHITE);
+        input.setBorder(border);
+
+        equation = new JTextField();
+        equation.setBounds(10, 10, 335, 20);
+        equation.setFont(myfonte);
+        equation.setEditable(false);
+        equation.setBorder(be);
+        equation.setBackground(Color.BLACK);
+        equation.setForeground(Color.WHITE);
+
+        add = new JButton("+");
+        sub = new JButton("-");
+        multi = new JButton("×");
+        div = new JButton("÷");
+        equ = new JButton("=");
+        neg = new JButton("+/-");
+        dec = new JButton(".");
+        del = new JButton("⌫");
+        clr = new JButton("C");
+        perc = new JButton("%");
+        sqr = new JButton("x²");
+        rt = new JButton("²√x");
+        half = new JButton("1/x");
+        clral = new JButton("CE");
+
+        function[0] = add;
+        function[1] = sub;
+        function[2] = multi;
+        function[3] = div;
+        function[4] = equ;
+        function[5] = neg;
+        function[6] = dec;
+        function[7] = del;
+        function[8] = clr;
+        function[9] = perc;
+        function[10] = sqr;
+        function[11] = rt;
+        function[12] = half;
+        function[13] = clral;
+
+        for (int i = 0; i < 14; i++) {
+            function[i].addActionListener(this);
+            function[i].setFont(myfont);
+            function[i].setFocusable(false);
+            function[i].setBackground(Color.DARK_GRAY);
+            function[i].setForeground(Color.WHITE);
+            function[i].setBorder(border);
+            function[i].setOpaque(true);
+            function[i].addMouseListener(new MouseAdapter() {
+                public void mouseEntered(MouseEvent evt) {
+                    for (int i = 0; i < 14; i++) {
+                        if (evt.getSource() == function[4]) {
+                            function[4].setBackground(Color.CYAN);
+                        } else if (evt.getSource() == function[i]) {
+                            function[i].setBackground(Color.LIGHT_GRAY);
+                        }
+                    }
+                }
+
+                public void mouseExited(MouseEvent evt) {
+                    for (int i = 0; i < 14; i++) {
+                        if (evt.getSource() == function[4]) {
+                            function[4].setBackground(Color.BLUE);
+                        } else if (evt.getSource() == function[5]) {
+                            function[5].setBackground(Color.GRAY);
+                        } else if (evt.getSource() == function[6]) {
+                            function[6].setBackground(Color.GRAY);
+                        } else if (evt.getSource() == function[i]) {
+                            function[i].setBackground(Color.DARK_GRAY);
+                        }
+                    }
+                }
+
+                public void mousePressed(MouseEvent evt) {
+                    for (int i = 0; i < 14; i++) {
+                        if (evt.getSource() == function[4]) {
+                            function[4].setBackground(Color.WHITE);
+                            function[4].setBackground(Color.CYAN);
+                        } else if (evt.getSource() == function[i]) {
+                            function[i].setBackground(Color.WHITE);
+                            function[i].setBackground(Color.LIGHT_GRAY);
+                        }
+                    }
+                }
+            });
+        }
+        for (int i = 0; i < 10; i++) {
+            num[i] = new JButton(String.valueOf(i));
+            num[i].addActionListener(this);
+            num[i].setFont(myfont);
+            num[i].setFocusable(false);
+            num[i].setBackground(Color.GRAY);
+            num[i].setForeground(Color.WHITE);
+            num[i].setBorder(border);
+            num[i].setOpaque(true);
+            num[i].addMouseListener(new MouseAdapter() {
+
+                public void mouseEntered(MouseEvent evt) {
+                    for (int i = 0; i < 10; i++) {
+                        if (evt.getSource() == num[i]) {
+                            num[i].setBackground(Color.LIGHT_GRAY);
+                        }
+                    }
+                }
+
+                public void mouseExited(MouseEvent evt) {
+                    for (int i = 0; i < 10; i++) {
+                        if (evt.getSource() == num[i]) {
+                            num[i].setBackground(Color.GRAY);
+                        }
+                    }
+                }
+
+                public void mousePressed(MouseEvent evt) {
+                    for (int i = 0; i < 10; i++) {
+                        if (evt.getSource() == num[i]) {
+                            num[i].setBackground(Color.WHITE);
+                            num[i].setBackground(Color.LIGHT_GRAY);
+                        }
+                    }
+                }
+
+            });
+        }
+
+        dec.setBackground(Color.GRAY);
+        neg.setBackground(Color.GRAY);
+        equ.setBackground(Color.BLUE);
+
+        panel = new JPanel();
+        panel.setBounds(10, 100, 335, 350);
+        panel.setLayout(new GridLayout(6, 4, 1, 1));
+        panel.setBackground(Color.BLACK);
+
+        panel.add(perc);
+        panel.add(clral);
+        panel.add(clr);
+        panel.add(del);
+        panel.add(half);
+        panel.add(sqr);
+        panel.add(rt);
+        panel.add(div);
+        panel.add(num[7]);
+        panel.add(num[8]);
+        panel.add(num[9]);
+        panel.add(multi);
+        panel.add(num[4]);
+        panel.add(num[5]);
+        panel.add(num[6]);
+        panel.add(sub);
+        panel.add(num[1]);
+        panel.add(num[2]);
+        panel.add(num[3]);
+        panel.add(add);
+        panel.add(neg);
+        panel.add(num[0]);
+        panel.add(dec);
+        panel.add(equ);
+
+        frame.add(equation, BorderLayout.CENTER);
+        frame.add(input, BorderLayout.CENTER);
+        frame.add(panel, BorderLayout.CENTER);
+        frame.add(background);
+        frame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new Calc_App();
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        for (int i = 0; i < 10; i++) {
+            if (e.getSource() == num[i]) {
+                double temp = Double.parseDouble(input.getText());
+                if (temp == 0) {
+                    input.setText(String.valueOf(i));
+                } else {
+                    input.setText(input.getText().concat(String.valueOf(i)));
+                }
+            }
+        }
+        if (e.getSource() == dec) {
+            input.setText(input.getText().concat("."));
+        } else if (e.getSource() == add) {
+            num1 = Double.parseDouble(input.getText());
+            ope = '+';
+            equation.setText(num1 + " + ");
+            input.setText("0");
+        } else if (e.getSource() == sub) {
+            num1 = Double.parseDouble(input.getText());
+            ope = '-';
+            equation.setText(num1 + " - ");
+            input.setText("0");
+        } else if (e.getSource() == multi) {
+            num1 = Double.parseDouble(input.getText());
+            ope = '*';
+            equation.setText(num1 + " × ");
+            input.setText("0");
+        } else if (e.getSource() == div) {
+            num1 = Double.parseDouble(input.getText());
+            ope = '/';
+            equation.setText(num1 + " ÷ ");
+            input.setText("0");
+        } else if (e.getSource() == perc) {
+            num1 = Double.parseDouble(input.getText());
+            ope = '%';
+            equation.setText(num1 + " % ");
+            input.setText("0");
+        } else if (e.getSource() == equ) {
+            num2 = Double.parseDouble(input.getText());
+            equation.setText(equation.getText().concat(num2 + " ="));
+            if (ope == '+' || ope == '/' || ope == '-' || ope == '*' || ope == '%') {
+                switch (ope) {
+                    case '+':
+                        ans = num1 + num2;
+                        break;
+                    case '-':
+                        ans = num1 - num2;
+                        break;
+                    case '*':
+                        ans = num1 * num2;
+                        break;
+                    case '/':
+                        ans = num1 * num2;
+                        break;
+                    case '%':
+                        ans = num1 % num2;
+                        break;
+                }
+            } else {
+                ans = Double.parseDouble(input.getText());
+            }
+            input.setText(String.valueOf(ans));
+            num1 = ans;
+        } else if (e.getSource() == clr) {
+            input.setText("0");
+        } else if (e.getSource() == del) {
+            String str = input.getText();
+            input.setText("");
+            for (int i = 0; i < str.length() - 1; i++) {
+                input.setText(input.getText() + str.charAt(i));
+            }
+        } else if (e.getSource() == neg) {
+            double temp = Double.parseDouble(input.getText());
+            temp *= -1;
+            input.setText(String.valueOf(temp));
+        } else if (e.getSource() == clral) {
+            input.setText("0");
+            equation.setText("");
+            num1 = 0;
+            num2 = 0;
+            ope = 0;
+        } else if (e.getSource() == sqr) {
+            double temp = Double.parseDouble(input.getText());
+            equation.setText(temp + "²");
+            temp *= temp;
+            input.setText(String.valueOf(temp));
+        } else if (e.getSource() == rt) {
+            double temp = Double.parseDouble(input.getText());
+            equation.setText("²√" + temp);
+            temp = Math.sqrt(temp);
+            input.setText(String.valueOf(temp));
+        } else if (e.getSource() == half) {
+            double temp = Double.parseDouble(input.getText());
+            equation.setText("1 /" + temp);
+            temp = 1 / temp;
+            input.setText(String.valueOf(temp));
+        }
+    }
+}

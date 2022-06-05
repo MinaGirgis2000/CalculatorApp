@@ -1,8 +1,12 @@
+package calculator;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.lang.Math;
+import java.util.EventObject;
 import java.awt.*;
 import java.awt.event.*;
+
 
 public class Calc_App implements ActionListener {
 
@@ -24,7 +28,6 @@ public class Calc_App implements ActionListener {
     Font myfonte = new Font(Font.SERIF, Font.BOLD, 20);
 
     Calc_App() {
-
         frame = new JFrame("Calculator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(370, 500);
@@ -208,9 +211,7 @@ public class Calc_App implements ActionListener {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new Calc_App();
-    }
+    
 
     public void actionPerformed(ActionEvent e) {
         for (int i = 0; i < 10; i++) {
@@ -223,34 +224,41 @@ public class Calc_App implements ActionListener {
                 }
             }
         }
-        if (e.getSource() == dec) {
-            input.setText(input.getText().concat("."));
-        } else if (e.getSource() == add) {
+        switch(e.getSource()){
+          case dec:{
+            input.setText(input.getText().contact("."));
+          }
+          case add:{
             num1 = Double.parseDouble(input.getText());
             ope = '+';
             equation.setText(num1 + " + ");
             input.setText("0");
-        } else if (e.getSource() == sub) {
+          }
+          case sub:{
             num1 = Double.parseDouble(input.getText());
             ope = '-';
             equation.setText(num1 + " - ");
             input.setText("0");
-        } else if (e.getSource() == multi) {
+          }
+          case multi:{
             num1 = Double.parseDouble(input.getText());
             ope = '*';
             equation.setText(num1 + " × ");
             input.setText("0");
-        } else if (e.getSource() == div) {
+          }
+          case div:{
             num1 = Double.parseDouble(input.getText());
             ope = '/';
             equation.setText(num1 + " ÷ ");
             input.setText("0");
-        } else if (e.getSource() == perc) {
+          }
+          case perc:{
             num1 = Double.parseDouble(input.getText());
             ope = '%';
             equation.setText(num1 + " % ");
             input.setText("0");
-        } else if (e.getSource() == equ) {
+          }
+          case equ:{
             num2 = Double.parseDouble(input.getText());
             equation.setText(equation.getText().concat(num2 + " ="));
             if (ope == '+' || ope == '/' || ope == '-' || ope == '*' || ope == '%') {
@@ -276,39 +284,53 @@ public class Calc_App implements ActionListener {
             }
             input.setText(String.valueOf(ans));
             num1 = ans;
-        } else if (e.getSource() == clr) {
+          }
+          case clr:{
             input.setText("0");
-        } else if (e.getSource() == del) {
+
+          }
+          case del:{
             String str = input.getText();
             input.setText("");
             for (int i = 0; i < str.length() - 1; i++) {
                 input.setText(input.getText() + str.charAt(i));
             }
-        } else if (e.getSource() == neg) {
+          }
+          case neg:{
             double temp = Double.parseDouble(input.getText());
             temp *= -1;
             input.setText(String.valueOf(temp));
-        } else if (e.getSource() == clral) {
+          }
+          case clral:{
             input.setText("0");
             equation.setText("");
             num1 = 0;
             num2 = 0;
             ope = 0;
-        } else if (e.getSource() == sqr) {
+          }
+          case sqr:{
             double temp = Double.parseDouble(input.getText());
             equation.setText(temp + "²");
             temp *= temp;
             input.setText(String.valueOf(temp));
-        } else if (e.getSource() == rt) {
+
+          }
+          case rt:{
             double temp = Double.parseDouble(input.getText());
             equation.setText("²√" + temp);
             temp = Math.sqrt(temp);
             input.setText(String.valueOf(temp));
-        } else if (e.getSource() == half) {
+          }
+          case half:{
             double temp = Double.parseDouble(input.getText());
             equation.setText("1 /" + temp);
             temp = 1 / temp;
             input.setText(String.valueOf(temp));
-        }
+          }
+        }           
     }
+  public static void main(String[] args) {
+       new Calc_App();
+  }  
+
 }

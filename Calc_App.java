@@ -567,6 +567,9 @@ public class Calc_App extends JFrame implements ActionListener, KeyListener {
                 num1 = ans;
                 k = 0;
                 break;
+           case KeyEvent.VK_PERIOD:
+                input.setText(input.getText().concat("."));
+                break;
         }
     }
 }

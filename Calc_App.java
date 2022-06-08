@@ -4,12 +4,11 @@ import java.lang.Math;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Calc_App implements ActionListener {
+public class Calc_App extends JFrame implements ActionListener, KeyListener {
 
-    JFrame frame;
     JButton[] num = new JButton[10];
     JButton[] function = new JButton[14];
-    JButton add, sub, multi, div, equ, neg, dec, del, clr, perc, sqr, rt, half, clral;
+    JButton add, sub, multi, div, equ, neg, dec, del, clr, mod, sqr, rt, half, clral;
     JPanel panel;
     JPanel background;
     JTextField equation;
@@ -25,11 +24,12 @@ public class Calc_App implements ActionListener {
 
     Calc_App() {
 
-        frame = new JFrame("Calculator");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(370, 500);
-        frame.setLayout(new BorderLayout());
-        frame.setBackground(Color.DARK_GRAY);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(370, 500);
+        this.setLayout(null);
+        this.setBackground(Color.DARK_GRAY);
+        this.addKeyListener(this);
+        this.setTitle("Calculator");
 
         background = new JPanel();
         background.setBounds(0, 0, 370, 500);
@@ -43,6 +43,7 @@ public class Calc_App implements ActionListener {
         input.setBackground(Color.BLACK);
         input.setForeground(Color.WHITE);
         input.setBorder(border);
+        input.addKeyListener(this);
 
         equation = new JTextField();
         equation.setBounds(10, 10, 335, 20);
@@ -51,6 +52,7 @@ public class Calc_App implements ActionListener {
         equation.setBorder(be);
         equation.setBackground(Color.BLACK);
         equation.setForeground(Color.WHITE);
+        equation.addKeyListener(this);
 
         add = new JButton("+");
         sub = new JButton("-");
@@ -61,7 +63,7 @@ public class Calc_App implements ActionListener {
         dec = new JButton(".");
         del = new JButton("⌫");
         clr = new JButton("C");
-        perc = new JButton("%");
+        mod = new JButton("%");
         sqr = new JButton("x²");
         rt = new JButton("²√x");
         half = new JButton("1/x");
@@ -76,7 +78,7 @@ public class Calc_App implements ActionListener {
         function[6] = dec;
         function[7] = del;
         function[8] = clr;
-        function[9] = perc;
+        function[9] = mod;
         function[10] = sqr;
         function[11] = rt;
         function[12] = half;
@@ -176,7 +178,7 @@ public class Calc_App implements ActionListener {
         panel.setLayout(new GridLayout(6, 4, 1, 1));
         panel.setBackground(Color.BLACK);
 
-        panel.add(perc);
+        panel.add(mod);
         panel.add(clral);
         panel.add(clr);
         panel.add(del);
@@ -201,11 +203,11 @@ public class Calc_App implements ActionListener {
         panel.add(dec);
         panel.add(equ);
 
-        frame.add(equation, BorderLayout.CENTER);
-        frame.add(input, BorderLayout.CENTER);
-        frame.add(panel, BorderLayout.CENTER);
-        frame.add(background);
-        frame.setVisible(true);
+        this.add(equation);
+        this.add(input);
+        this.add(panel);
+        this.add(background);
+        this.setVisible(true);
     }
 
     public static void main(String[] args) {
@@ -213,9 +215,11 @@ public class Calc_App implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        int k = 0;
+        double temp;
         for (int i = 0; i < 10; i++) {
             if (e.getSource() == num[i]) {
-                double temp = Double.parseDouble(input.getText());
+                temp = Double.parseDouble(input.getText());
                 if (temp == 0) {
                     input.setText(String.valueOf(i));
                 } else {
@@ -226,29 +230,74 @@ public class Calc_App implements ActionListener {
         if (e.getSource() == dec) {
             input.setText(input.getText().concat("."));
         } else if (e.getSource() == add) {
-            num1 = Double.parseDouble(input.getText());
+            k++;
             ope = '+';
-            equation.setText(num1 + " + ");
+            if (k == 1) {
+                num1 = Double.parseDouble(input.getText());
+                equation.setText(num1 + " + ");
+                k++;
+            } else if (k == 2) {
+                temp = Double.parseDouble(input.getText());
+                num1 += temp;
+                equation.setText(equation.getText().concat(temp + " + "));
+                k--;
+            }
             input.setText("0");
         } else if (e.getSource() == sub) {
-            num1 = Double.parseDouble(input.getText());
+            k++;
             ope = '-';
-            equation.setText(num1 + " - ");
+            if (k == 1) {
+                num1 = Double.parseDouble(input.getText());
+                equation.setText(num1 + " - ");
+                k++;
+            } else if (k == 2) {
+                temp = Double.parseDouble(input.getText());
+                num1 -= temp;
+                equation.setText(equation.getText().concat(temp + " - "));
+                k--;
+            }
             input.setText("0");
         } else if (e.getSource() == multi) {
-            num1 = Double.parseDouble(input.getText());
+            k++;
             ope = '*';
-            equation.setText(num1 + " × ");
+            if (k == 1) {
+                num1 = Double.parseDouble(input.getText());
+                equation.setText(num1 + " × ");
+                k++;
+            } else if (k == 2) {
+                temp = Double.parseDouble(input.getText());
+                num1 *= temp;
+                equation.setText(equation.getText().concat(temp + " × "));
+                k--;
+            }
             input.setText("0");
         } else if (e.getSource() == div) {
-            num1 = Double.parseDouble(input.getText());
+            k++;
             ope = '/';
-            equation.setText(num1 + " ÷ ");
+            if (k == 1) {
+                num1 = Double.parseDouble(input.getText());
+                equation.setText(num1 + " ÷ ");
+                k++;
+            } else if (k == 2) {
+                temp = Double.parseDouble(input.getText());
+                num1 /= temp;
+                equation.setText(equation.getText().concat(temp + " ÷ "));
+                k--;
+            }
             input.setText("0");
-        } else if (e.getSource() == perc) {
-            num1 = Double.parseDouble(input.getText());
+        } else if (e.getSource() == mod) {
+            k++;
             ope = '%';
-            equation.setText(num1 + " % ");
+            if (k == 1) {
+                num1 = Double.parseDouble(input.getText());
+                equation.setText(num1 + " % ");
+                k++;
+            } else if (k == 2) {
+                temp = Double.parseDouble(input.getText());
+                num1 %= temp;
+                equation.setText(equation.getText().concat(temp + " % "));
+                k--;
+            }
             input.setText("0");
         } else if (e.getSource() == equ) {
             num2 = Double.parseDouble(input.getText());
@@ -276,6 +325,7 @@ public class Calc_App implements ActionListener {
             }
             input.setText(String.valueOf(ans));
             num1 = ans;
+            k = 0;
         } else if (e.getSource() == clr) {
             input.setText("0");
         } else if (e.getSource() == del) {
@@ -285,7 +335,7 @@ public class Calc_App implements ActionListener {
                 input.setText(input.getText() + str.charAt(i));
             }
         } else if (e.getSource() == neg) {
-            double temp = Double.parseDouble(input.getText());
+            temp = Double.parseDouble(input.getText());
             temp *= -1;
             input.setText(String.valueOf(temp));
         } else if (e.getSource() == clral) {
@@ -294,21 +344,230 @@ public class Calc_App implements ActionListener {
             num1 = 0;
             num2 = 0;
             ope = 0;
+            k = 1;
         } else if (e.getSource() == sqr) {
-            double temp = Double.parseDouble(input.getText());
+            temp = Double.parseDouble(input.getText());
             equation.setText(temp + "²");
             temp *= temp;
             input.setText(String.valueOf(temp));
         } else if (e.getSource() == rt) {
-            double temp = Double.parseDouble(input.getText());
+            temp = Double.parseDouble(input.getText());
             equation.setText("²√" + temp);
             temp = Math.sqrt(temp);
             input.setText(String.valueOf(temp));
         } else if (e.getSource() == half) {
-            double temp = Double.parseDouble(input.getText());
+            temp = Double.parseDouble(input.getText());
             equation.setText("1 /" + temp);
             temp = 1 / temp;
             input.setText(String.valueOf(temp));
+        }
+
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // NONE
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // NONE
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        int k = 0;
+        double temp = Double.parseDouble(input.getText());
+
+        switch (e.getKeyChar()) {
+            case '+':
+                ope = '+';
+                k++;
+                if (k == 1) {
+                    num1 = Double.parseDouble(input.getText());
+                    equation.setText(num1 + " + ");
+                    k++;
+                } else if (k == 2) {
+                    temp = Double.parseDouble(input.getText());
+                    num1 += temp;
+                    equation.setText(equation.getText().concat(temp + " + "));
+                    k--;
+                }
+                input.setText("0");
+                break;
+            case '-':
+                ope = '-';
+                k++;
+                if (k == 1) {
+                    num1 = Double.parseDouble(input.getText());
+                    equation.setText(num1 + " - ");
+                    k++;
+                } else if (k == 2) {
+                    temp = Double.parseDouble(input.getText());
+                    num1 -= temp;
+                    equation.setText(equation.getText().concat(temp + " - "));
+                    k--;
+                }
+                input.setText("0");
+                break;
+            case '*':
+                ope = '*';
+                k++;
+                if (k == 1) {
+                    num1 = Double.parseDouble(input.getText());
+                    equation.setText(num1 + " × ");
+                    k++;
+                } else if (k == 2) {
+                    temp = Double.parseDouble(input.getText());
+                    num1 *= temp;
+                    equation.setText(equation.getText().concat(temp + " × "));
+                    k--;
+                }
+                input.setText("0");
+                break;
+            case '/':
+                k++;
+                ope = '/';
+                if (k == 1) {
+                    num1 = Double.parseDouble(input.getText());
+                    equation.setText(num1 + " ÷ ");
+                    k++;
+                } else if (k == 2) {
+                    temp = Double.parseDouble(input.getText());
+                    num1 /= temp;
+                    equation.setText(equation.getText().concat(temp + " ÷ "));
+                    k--;
+                }
+                input.setText("0");
+                break;
+            case '%':
+                k++;
+                ope = '%';
+                if (k == 1) {
+                    num1 = Double.parseDouble(input.getText());
+                    equation.setText(num1 + " % ");
+                    k++;
+                } else if (k == 2) {
+                    temp = Double.parseDouble(input.getText());
+                    num1 %= temp;
+                    equation.setText(equation.getText().concat(temp + " % "));
+                    k--;
+                }
+                input.setText("0");
+                break;
+            case '=':
+            case KeyEvent.VK_ENTER:
+                num2 = Double.parseDouble(input.getText());
+                equation.setText(equation.getText().concat(num2 + " = "));
+                if (ope == '+' || ope == '/' || ope == '-' || ope == '*' || ope == '%') {
+                    switch (ope) {
+                        case '+':
+                            ans = num1 + num2;
+                            break;
+                        case '-':
+                            ans = num1 - num2;
+                            break;
+                        case '*':
+                            ans = num1 * num2;
+                            break;
+                        case '/':
+                            ans = num1 / num2;
+                            break;
+                        case '%':
+                            ans = num1 % num2;
+                            break;
+                    }
+                } else {
+                    ans = Double.parseDouble(input.getText());
+                }
+                input.setText(String.valueOf(ans));
+                num1 = ans;
+                k = 0;
+                break;
+
+        }
+        if (temp == 0) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_0:
+                    input.setText(input.getText().concat("0"));
+                    break;
+                case KeyEvent.VK_1:
+                    input.setText("1");
+                    break;
+                case KeyEvent.VK_2:
+                    input.setText("2");
+                    break;
+                case KeyEvent.VK_3:
+                    input.setText("3");
+                    break;
+                case KeyEvent.VK_4:
+                    input.setText("4");
+                    break;
+                case KeyEvent.VK_5:
+                    input.setText("5");
+                    break;
+                case KeyEvent.VK_6:
+                    input.setText("6");
+                    break;
+                case KeyEvent.VK_7:
+                    input.setText("7");
+                    break;
+                case KeyEvent.VK_8:
+                    input.setText("8");
+                    break;
+                case KeyEvent.VK_9:
+                    input.setText("9");
+                    break;
+
+            }
+        } else {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_0:
+                    input.setText(input.getText().concat("0"));
+                    break;
+                case KeyEvent.VK_1:
+                    input.setText(input.getText().concat("1"));
+                    break;
+                case KeyEvent.VK_2:
+                    input.setText(input.getText().concat("2"));
+                    break;
+                case KeyEvent.VK_3:
+                    input.setText(input.getText().concat("3"));
+                    break;
+                case KeyEvent.VK_4:
+                    input.setText(input.getText().concat("4"));
+                    break;
+                case KeyEvent.VK_5:
+                    input.setText(input.getText().concat("5"));
+                    break;
+                case KeyEvent.VK_6:
+                    input.setText(input.getText().concat("6"));
+                    break;
+                case KeyEvent.VK_7:
+                    input.setText(input.getText().concat("7"));
+                    break;
+                case KeyEvent.VK_8:
+                    input.setText(input.getText().concat("8"));
+                    break;
+                case KeyEvent.VK_9:
+                    input.setText(input.getText().concat("9"));
+                    break;
+                case KeyEvent.VK_BACK_SPACE:
+                    String str = input.getText();
+                    input.setText("");
+                    for (int i = 0; i < str.length() - 1; i++) {
+                        input.setText(input.getText() + str.charAt(i));
+                    }
+                    break;
+                case KeyEvent.VK_ESCAPE:
+                    input.setText("0");
+                    equation.setText("");
+                    num1 = 0;
+                    num2 = 0;
+                    ope = 0;
+                    k = 1;
+                    break;
+            }
         }
     }
 }

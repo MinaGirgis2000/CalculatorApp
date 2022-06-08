@@ -379,6 +379,89 @@ public class Calc_App extends JFrame implements ActionListener, KeyListener {
         int k = 0;
         double temp = Double.parseDouble(input.getText());
 
+        if (temp == 0) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_0:
+                    input.setText(input.getText().concat("0"));
+                    break;
+                case KeyEvent.VK_1:
+                    input.setText("1");
+                    break;
+                case KeyEvent.VK_2:
+                    input.setText("2");
+                    break;
+                case KeyEvent.VK_3:
+                    input.setText("3");
+                    break;
+                case KeyEvent.VK_4:
+                    input.setText("4");
+                    break;
+                case KeyEvent.VK_5:
+                    input.setText("5");
+                    break;
+                case KeyEvent.VK_6:
+                    input.setText("6");
+                    break;
+                case KeyEvent.VK_7:
+                    input.setText("7");
+                    break;
+                case KeyEvent.VK_8:
+                    input.setText("8");
+                    break;
+                case KeyEvent.VK_9:
+                    input.setText("9");
+                    break;
+
+            }
+        } else {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_0:
+                    input.setText(input.getText().concat("0"));
+                    break;
+                case KeyEvent.VK_1:
+                    input.setText(input.getText().concat("1"));
+                    break;
+                case KeyEvent.VK_2:
+                    input.setText(input.getText().concat("2"));
+                    break;
+                case KeyEvent.VK_3:
+                    input.setText(input.getText().concat("3"));
+                    break;
+                case KeyEvent.VK_4:
+                    input.setText(input.getText().concat("4"));
+                    break;
+                case KeyEvent.VK_5:
+                    input.setText(input.getText().concat("5"));
+                    break;
+                case KeyEvent.VK_6:
+                    input.setText(input.getText().concat("6"));
+                    break;
+                case KeyEvent.VK_7:
+                    input.setText(input.getText().concat("7"));
+                    break;
+                case KeyEvent.VK_8:
+                    input.setText(input.getText().concat("8"));
+                    break;
+                case KeyEvent.VK_9:
+                    input.setText(input.getText().concat("9"));
+                    break;
+                case KeyEvent.VK_BACK_SPACE:
+                    String str = input.getText();
+                    input.setText("");
+                    for (int i = 0; i < str.length() - 1; i++) {
+                        input.setText(input.getText() + str.charAt(i));
+                    }
+                    break;
+                case KeyEvent.VK_ESCAPE:
+                    input.setText("0");
+                    equation.setText("");
+                    num1 = 0;
+                    num2 = 0;
+                    ope = 0;
+                    k = 1;
+                    break;
+            }
+        }
         switch (e.getKeyChar()) {
             case '+':
                 ope = '+';
@@ -484,90 +567,6 @@ public class Calc_App extends JFrame implements ActionListener, KeyListener {
                 num1 = ans;
                 k = 0;
                 break;
-
-        }
-        if (temp == 0) {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_0:
-                    input.setText(input.getText().concat("0"));
-                    break;
-                case KeyEvent.VK_1:
-                    input.setText("1");
-                    break;
-                case KeyEvent.VK_2:
-                    input.setText("2");
-                    break;
-                case KeyEvent.VK_3:
-                    input.setText("3");
-                    break;
-                case KeyEvent.VK_4:
-                    input.setText("4");
-                    break;
-                case KeyEvent.VK_5:
-                    input.setText("5");
-                    break;
-                case KeyEvent.VK_6:
-                    input.setText("6");
-                    break;
-                case KeyEvent.VK_7:
-                    input.setText("7");
-                    break;
-                case KeyEvent.VK_8:
-                    input.setText("8");
-                    break;
-                case KeyEvent.VK_9:
-                    input.setText("9");
-                    break;
-
-            }
-        } else {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_0:
-                    input.setText(input.getText().concat("0"));
-                    break;
-                case KeyEvent.VK_1:
-                    input.setText(input.getText().concat("1"));
-                    break;
-                case KeyEvent.VK_2:
-                    input.setText(input.getText().concat("2"));
-                    break;
-                case KeyEvent.VK_3:
-                    input.setText(input.getText().concat("3"));
-                    break;
-                case KeyEvent.VK_4:
-                    input.setText(input.getText().concat("4"));
-                    break;
-                case KeyEvent.VK_5:
-                    input.setText(input.getText().concat("5"));
-                    break;
-                case KeyEvent.VK_6:
-                    input.setText(input.getText().concat("6"));
-                    break;
-                case KeyEvent.VK_7:
-                    input.setText(input.getText().concat("7"));
-                    break;
-                case KeyEvent.VK_8:
-                    input.setText(input.getText().concat("8"));
-                    break;
-                case KeyEvent.VK_9:
-                    input.setText(input.getText().concat("9"));
-                    break;
-                case KeyEvent.VK_BACK_SPACE:
-                    String str = input.getText();
-                    input.setText("");
-                    for (int i = 0; i < str.length() - 1; i++) {
-                        input.setText(input.getText() + str.charAt(i));
-                    }
-                    break;
-                case KeyEvent.VK_ESCAPE:
-                    input.setText("0");
-                    equation.setText("");
-                    num1 = 0;
-                    num2 = 0;
-                    ope = 0;
-                    k = 1;
-                    break;
-            }
         }
     }
 }

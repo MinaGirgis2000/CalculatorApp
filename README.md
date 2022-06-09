@@ -6,7 +6,7 @@ Calculator App
 
 - The language used is Java. The reason for this is that I'm currently just trying to upgrade my programming skills.
 
-- A huge thanks to my friend @TeraBot452 for helping on making this into an actually app, you can check him out here, @TeraBot452
+- A huge thanks to my friend Rahul Chandra for helping on making this into an actually app, you can check him out here, https://github.com/xXTeraXx
 
 Controls:
 - Each number key will correspond with it's number (Obviously)

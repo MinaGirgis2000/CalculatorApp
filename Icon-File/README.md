@@ -9,3 +9,6 @@ Instructions (Note: these instructions are only for Windows users):
 4. Right click on the shortcut file and choose properties
 5. Click the change Icon button near the middle of the window
 6. Click browse and choose the icon file that you saved
+
+If there are any problems with the files, you can go to this site: https://icon-icons.com/icon/calculator/34473
+FYI, You can also search for other icons on this site for more calculator icons

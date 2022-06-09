@@ -10,11 +10,11 @@ Calculator App
 
 Controls:
 - Each number key will correspond with it's number (Obviously)
-- + : Shift =
-- - : - (minus key)
-- × : Shift 8 (*)
-- ÷ : / (forword slash key)
-- = : = or ENTER
+- add(+) : Shift =
+- subtract(-) : - (minus key)
+- multiply(×) : Shift 8 (*)
+- Divide(÷) : / (forword slash key)
+- Equal(=) : = or ENTER
 - Clear all : Esc
 
 If you have any suggestions for any new controls or any other additions to the app it would be much appreciated.

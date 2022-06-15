@@ -10,9 +10,9 @@ Calculator App
 
 Controls:
 - Each number key will correspond with it's number (Obviously)
-- add(+) : Shift =
-- subtract(-) : - (minus key)
-- multiply(×) : Shift 8 (*)
+- Add(+) : Shift =
+- Subtract(-) : - (minus key)
+- Multiply(×) : Shift 8 (*)
 - Divide(÷) : / (forword slash key)
 - Equal(=) : = or ENTER
 - Clear all : Esc
